@@ -1,10 +1,9 @@
 ﻿using LanchesMac.Context;
 using LanchesMac.Models;
+using LanchesMac.Respositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace LanchesMac.Respositories
 {
@@ -21,9 +20,11 @@ namespace LanchesMac.Respositories
 
         p.IsLanchePreferido).Include(c => c.Categoria);
 
-        public Lanche GetLancheById(int lancheId)
-        {
-            return _context.Lanches.FirstOrDefault(l => l.LancheId == lancheId);
-        }
+        IEnumerable<Lanche> ILancheRepository.Lanches => _context.Lanches.Include(c => c.Categoria);
+
+        IEnumerable<Lanche> ILancheRepository.LanchesPreferidos => _context.Lanches.Where(p => p.IsLanchePreferido).Include(c => c.Categoria);
+
+        public Lanche GetLancheById(int lancheId) => _context.Lanches.FirstOrDefault(l => l.LancheId == lancheId);
+        
     }
 }

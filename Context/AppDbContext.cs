@@ -1,12 +1,14 @@
 ﻿using LanchesMac.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace LanchesMac.Context
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext<IdentityUser>
     {
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) 
-        {}
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+        { }
 
         public DbSet<Lanche> Lanches { get; set; }
         public DbSet<Categoria> Categorias { get; set; }
@@ -15,4 +17,5 @@ namespace LanchesMac.Context
         public DbSet<Pedido> Pedidos { get; set; }
         public DbSet<PedidoDetalhe> PedidoDetalhes { get; set; }
     }
+
 }

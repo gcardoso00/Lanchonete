@@ -1,11 +1,13 @@
 ﻿using LanchesMac.Models;
+using System.Collections.Generic;
 
-
-namespace LanchesMac.Respositories
+namespace LanchesMac.Respositories.Interfaces
 {
-    interface IPedidoRepository
+    public interface IPedidoRepository
     {
         void CriarPedido(Pedido pedido);
+        Pedido GetPedidoById(int pedidoId);
+        List<Pedido> GetPedidos();
 
     }
 }

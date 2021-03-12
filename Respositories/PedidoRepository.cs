@@ -1,5 +1,7 @@
 ﻿using LanchesMac.Context;
 using LanchesMac.Models;
+using LanchesMac.Respositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,11 +19,26 @@ namespace LanchesMac.Respositories
             _carrinhoCompra = carrinhoCompra;
         }
 
+        public Pedido GetPedidoById(int pedidoId)
+        {
+            var pedido = _appDbContext.Pedidos.Include(pd => pd.PedidoItens
+                         .Where(pd => pd.PedidoId == pedidoId))
+                         .FirstOrDefault(p => p.PedidoId == pedidoId);
+
+            return pedido;
+        }
+
+        public List<Pedido> GetPedidos()
+        {
+            return _appDbContext.Pedidos.ToList();
+        }
 
         public void CriarPedido(Pedido pedido)
         {
             pedido.PedidoEnviado = DateTime.Now;
             _appDbContext.Pedidos.Add(pedido);
+            _appDbContext.SaveChanges();
+
 
             var carrinhoCompraItens = _carrinhoCompra.CarrinhoCompraItens;
 
@@ -42,5 +59,8 @@ namespace LanchesMac.Respositories
             }
             _appDbContext.SaveChanges();
         }
+
+
+
     }
 }

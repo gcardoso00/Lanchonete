@@ -16,7 +16,7 @@ namespace LanchesMac.Components
         public IViewComponentResult Invoke()
         {
             var items = _carrinhoCompra.GetCarrinhoCompraItens();
-           // var items = new List<CarrinhoCompraItem>() { new CarrinhoCompraItem(), new CarrinhoCompraItem() };  
+            // var items = new List<CarrinhoCompraItem>() { new CarrinhoCompraItem(), new CarrinhoCompraItem() };  
 
             _carrinhoCompra.CarrinhoCompraItens = items;
 
